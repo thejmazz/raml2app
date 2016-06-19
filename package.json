@@ -1,0 +1,21 @@
+{
+  "name": "raml2-to-koa",
+  "version": "0.1.0",
+  "description": "RAML 1.0 API defintions to router definitions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa-bodyparser": "^2.2.0",
+    "koa-router": "^5.4.0",
+    "raml-1-parser": "^0.2.24"
+  },
+  "devDependencies": {
+    "koa": "^1.2.0",
+    "koa-morgan": "^0.4.0",
+    "nodemon": "^1.9.2"
+  }
+}
