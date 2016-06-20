@@ -24,26 +24,7 @@ export default class Todo extends Component {
     const { onClick, onDelete } = this
     const { content, completed } = this.props
 
-    // Use IIFE to avoid `let`ing what is not going to change
-    const styles = (() => {
-      if (completed) {
-        return { textDecoration: 'line-through' }
-      } else {
-        return {}
-      }
-    })()
-
-    // or this, but wont be as good for bigger things:
-    // (and won't work for try/catch)
-    // const styles = completed ? { textDecoration: 'line-through' } : {}
-
-    // `let` doesn't make sense here because we don't plan on changing styles
-    // let styles = {}
-    // if (completed) {
-    //   styles = {
-    //     textDecoration: 'line-through'
-    //   }
-    // }
+    const styles = completed ? { textDecoration: 'line-through' } : {}
 
     return(
       <div>

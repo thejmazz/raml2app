@@ -14,6 +14,7 @@ const config = {
       loader: 'babel'
     }]
   },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin()
   ]
