@@ -11,9 +11,7 @@ class Todos extends Component {
   render() {
     const {
       todos,
-      deleteTodo,
-      addTodo,
-      toggleTodo
+      dispatch
     } = this.props
 
     return(
@@ -25,22 +23,22 @@ class Todos extends Component {
             content={todo.content}
             completed={todo.completed}
             id={todo.id}
-            handleClick={toggleTodo}
-            handleDelete={deleteTodo}
+            handleClick={(id) => dispatch(toggleTodo(id))}
+            handleDelete={(id) => dispatch(deleteTodo(id))}
           />
         )}
       />
-      <AddTodo addHandler={addTodo}/>
+      <AddTodo addHandler={(content) => dispatch(addTodo(content))}/>
     </div>
     )
   }
 }
 
 const mapStateToProps = ({ id, todos }) => ({id, todos})
-const mapDispatchToProps = (dispatch) => ({
-  deleteTodo: (id) => dispatch(deleteTodo(id)),
-  addTodo: (content) => dispatch(addTodo(content)),
-  toggleTodo: (id) => dispatch(toggleTodo(id))
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   deleteTodo: (id) => dispatch(deleteTodo(id)),
+//   addTodo: (content) => dispatch(addTodo(content)),
+//   toggleTodo: (id) => dispatch(toggleTodo(id))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todos)
+export default connect(mapStateToProps)(Todos)
