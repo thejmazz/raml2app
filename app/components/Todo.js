@@ -9,9 +9,9 @@ export default class Todo extends Component {
   }
 
   onClick() {
-    const { id, handleClick } = this.props
+    const { id, completed, handleClick } = this.props
 
-    handleClick(id)
+    handleClick(id, completed)
   }
 
   onDelete() {

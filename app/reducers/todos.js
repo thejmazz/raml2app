@@ -1,14 +1,9 @@
-import { ADD_TODO, DELETE_TODO, TOGGLE_TODO } from '../constants/todos.js'
-
-const defaultTodos = [{
-  content: 'Buy eggs',
-  completed: true,
-  id: 0
-}, {
-  content: 'Make lunch',
-  completed: false,
-  id: 1
-}]
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  GET_TODOS,
+  TOGGLE_TODO
+} from '../constants/todos.js'
 
 const makeNewState = (state) => {
   const newTodos = []
@@ -70,7 +65,7 @@ const toggleTodo = (id, state) => {
   return newTodos
 }
 
-export default (state = defaultTodos, action) => {
+export default (state = [], action) => {
   const { type } = action
 
   switch (type) {
@@ -80,6 +75,8 @@ export default (state = defaultTodos, action) => {
     case ADD_TODO:
       return addTodo(action.content, state)
       break
+    case GET_TODOS:
+      return action.todos
     case TOGGLE_TODO:
       return toggleTodo(action.id, state)
       break

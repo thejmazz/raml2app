@@ -2,12 +2,12 @@
 
 const koa = require('koa')
 const router = require('koa-router')()
+const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
 
-
 // === DATABASE ===
-const todos = [{
+let todos = [{
   content: 'Buy eggs',
   completed: false,
   id: 0
@@ -20,19 +20,17 @@ let id = 2
 
 // === ROUTING ===
 router.post('/todos', function * () {
-  todos.push({
+  let todo = {
     content: this.request.body.content,
     completed: false,
     id: id
-  })
+  }
 
-  todos.forEach((todo) => {
-    if (todo.id === id) {
-      this.body = todos[id]
-    }
-  })
+  todos.push(todo)
 
   id++
+
+  this.body = todo
 })
 
 router.get('/todos/all', function * () {
@@ -59,8 +57,31 @@ router.put('/todos/:id', function * () {
   })
 })
 
+router.delete('/todos/:id', function * () {
+  const deleteTodo = (id) => {
+    const newTodos = []
+
+    todos.forEach((todo) => {
+      console.log(todo)
+      if (todo.id !== id) {
+        newTodos.push(todo)
+      }
+    })
+
+    return newTodos
+  }
+
+  todos = deleteTodo(parseInt(this.params.id))
+
+  this.body = {
+    success: true,
+    message: `Delete todo with id ${this.params.id}`
+  }
+})
+
 // === MIDDLEWARE ===
 const app = koa()
+app.use(cors())
 app.use(morgan.middleware('dev'))
 app.use(bodyParser())
 app.use(router.routes())

@@ -44,6 +44,14 @@ types:
               properties:
                 content: string
                 completed: boolean
+    delete:
+      responses:
+        204:
+          body:
+            application/json:
+              properties:
+                success: boolean
+                message: string
 
     put:
       body:

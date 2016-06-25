@@ -9,6 +9,10 @@ import AddTodo from './AddTodo.js'
 import * as TodoActionCreators from '../actions/todos.js'
 
 class Todos extends Component {
+  componentDidMount() {
+    this.props.getTodos()
+  }
+
   render() {
     const {
       todos,
