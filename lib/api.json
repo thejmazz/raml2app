@@ -1,0 +1,79 @@
+{
+  "/todos": {
+    "uriParams": {},
+    "methods": {
+      "post": {
+        "body": {
+          "content": "string"
+        },
+        "responses": {
+          "200": {
+            "body": {
+              "content": "string",
+              "completed": "boolean",
+              "id": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "/todos/all": {
+    "uriParams": {},
+    "methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "body": [
+              {
+                "content": "string",
+                "completed": "boolean",
+                "id": "number"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "/todos/{id}": {
+    "uriParams": {
+      "id": "string"
+    },
+    "methods": {
+      "get": {
+        "responses": {
+          "200": {
+            "body": {
+              "content": "string",
+              "completed": "boolean"
+            }
+          }
+        }
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "body": {
+              "success": "boolean",
+              "message": "string"
+            }
+          }
+        }
+      },
+      "put": {
+        "body": {
+          "completed": "boolean"
+        },
+        "responses": {
+          "200": {
+            "body": {
+              "content": "string",
+              "completed": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}
