@@ -10,6 +10,8 @@
   "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "config": "^1.21.0",
+    "js-yaml": "^3.6.1",
     "kcors": "^1.2.1",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",

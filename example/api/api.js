@@ -6,6 +6,7 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
 const pg = require('pg')
+const config = require('config')
 
 // === CONFIGURATION ===
 const PORT = process.env.API_PORT
@@ -22,12 +23,7 @@ let todos = [{
 }]
 let id = 2
 
-const client = new pg.Client({
-  user: 'dbuser',
-  database: 'todos',
-  password: 'dbpass',
-  host: 'postgreshost'
-})
+const client = new pg.Client(config.get('pg'))
 
 // === ROUTING ===
 router.post('/todos', function * () {
