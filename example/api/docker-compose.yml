@@ -6,7 +6,7 @@ services:
     volumes:
       - .:/usr/src/app
     environment:
-      - API_PORT=9001
+      - API_PORT=$API_PORT
     ports:
-      - "9001:9001"
+      - "$API_PORT:$API_PORT"
     command: ./node_modules/.bin/nodemon api.js

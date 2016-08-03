@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "docker-compose up api"
+    "start": "source .env && docker-compose up api"
   },
   "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",
   "license": "MIT",
@@ -14,8 +14,7 @@
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-morgan": "^0.4.0",
-    "koa-router": "^5.4.0",
-    "nodemon": "^1.9.2"
+    "koa-router": "^5.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.10.0"
