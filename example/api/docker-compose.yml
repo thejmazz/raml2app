@@ -5,13 +5,6 @@ services:
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app
-    environment:
-      - NODE_ENV=development
-      - API_PORT=$API_PORT
-      - API_PG_HOST=$API_PG_HOST
-      - DB_USER=$PG_USER
-      - DB_PASS=$PG_PASS
-      - DB_NAME=$PG_DBNAME
     ports:
       - "$API_PORT:$API_PORT"
     links:

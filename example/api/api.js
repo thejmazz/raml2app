@@ -1,13 +1,13 @@
 'use strict'
 
+require('dotenv').config()
+
 const koa = require('koa')
 const router = require('koa-router')()
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
 const pg = require('pg')
-
-const config = require('config')
 
 // === CONFIGURATION ===
 const PORT = process.env.API_PORT
@@ -24,8 +24,14 @@ let todos = [{
 }]
 let id = 2
 
-console.log(config)
-const client = new pg.Client(config.get('pg'))
+const pgConfig = {
+  user: process.env.PG_USER,
+  password: process.env.PG_PASS,
+  host: process.env.API_PG_HOST,
+  database: process.env.PG_DBNAME
+}
+
+const client = new pg.Client(pgConfig)
 
 // === ROUTING ===
 router.post('/todos', function * () {
