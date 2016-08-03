@@ -6,6 +6,7 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
 const pg = require('pg')
+
 const config = require('config')
 
 // === CONFIGURATION ===
@@ -23,6 +24,7 @@ let todos = [{
 }]
 let id = 2
 
+console.log(config)
 const client = new pg.Client(config.get('pg'))
 
 // === ROUTING ===

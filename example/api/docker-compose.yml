@@ -8,10 +8,14 @@ services:
     environment:
       - NODE_ENV=development
       - API_PORT=$API_PORT
+      - API_PG_HOST=$API_PG_HOST
+      - DB_USER=$PG_USER
+      - DB_PASS=$PG_PASS
+      - DB_NAME=$PG_DBNAME
     ports:
       - "$API_PORT:$API_PORT"
     links:
-      - postgres:postgreshost
+      - postgres:$API_PG_HOST
     command: ./node_modules/.bin/nodemon api.js
 
   postgres:

@@ -1,5 +1,0 @@
-pg:
-  host: postgreshost
-  user: dbuser
-  password: dbpass
-  database: todos
