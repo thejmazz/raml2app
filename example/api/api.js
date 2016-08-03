@@ -1,7 +1,5 @@
 'use strict'
 
-require('dotenv').config()
-
 const koa = require('koa')
 const router = require('koa-router')()
 const cors = require('kcors')
@@ -10,7 +8,7 @@ const morgan = require('koa-morgan')
 const pg = require('pg')
 
 // === CONFIGURATION ===
-const PORT = process.env.API_PORT
+const config = require('./lib/config.js')
 
 // === DATABASE ===
 let todos = [{
@@ -24,14 +22,7 @@ let todos = [{
 }]
 let id = 2
 
-const pgConfig = {
-  user: process.env.PG_USER,
-  password: process.env.PG_PASS,
-  host: process.env.API_PG_HOST,
-  database: process.env.PG_DBNAME
-}
-
-const client = new pg.Client(pgConfig)
+const client = new pg.Client(config.pg)
 
 // === ROUTING ===
 router.post('/todos', function * () {
@@ -103,9 +94,9 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 // === LISTEN ===
-const listen = () => {
-  app.listen(PORT)
-  console.log(`Koa server listening on port ${PORT}`)
+const listen = ({ port }) => {
+  app.listen(port)
+  console.log(`Koa server listening on port ${port}`)
 }
 
 client.connect((err) => {
@@ -116,5 +107,5 @@ client.connect((err) => {
 
   console.log('Connected to PG')
 
-  listen()
+  listen(config)
 })
