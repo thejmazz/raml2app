@@ -5,6 +5,7 @@ const router = require('koa-router')()
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
+const pg = require('pg')
 
 // === CONFIGURATION ===
 const PORT = process.env.API_PORT
@@ -20,6 +21,13 @@ let todos = [{
   id: 1
 }]
 let id = 2
+
+const client = new pg.Client({
+  user: 'dbuser',
+  database: 'todos',
+  password: 'dbpass',
+  host: 'postgreshost'
+})
 
 // === ROUTING ===
 router.post('/todos', function * () {
@@ -91,5 +99,18 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 // === LISTEN ===
-app.listen(PORT)
-console.log(`Koa server listening on port ${PORT}`)
+const listen = () => {
+  app.listen(PORT)
+  console.log(`Koa server listening on port ${PORT}`)
+}
+
+client.connect((err) => {
+  if (err) {
+    console.log(err)
+    return process.exit(1)
+  }
+
+  console.log('Connected to PG')
+
+  listen()
+})

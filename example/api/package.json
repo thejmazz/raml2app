@@ -14,7 +14,8 @@
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-morgan": "^0.4.0",
-    "koa-router": "^5.4.0"
+    "koa-router": "^5.4.0",
+    "pg": "^6.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.10.0"
