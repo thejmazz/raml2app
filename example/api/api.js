@@ -6,6 +6,9 @@ const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
 
+// === CONFIGURATION ===
+const PORT = process.env.API_PORT
+
 // === DATABASE ===
 let todos = [{
   content: 'Buy eggs',
@@ -87,5 +90,6 @@ app.use(bodyParser())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3000)
-console.log('Koa server listening on port 3000')
+// === LISTEN ===
+app.listen(PORT)
+console.log(`Koa server listening on port ${PORT}`)
