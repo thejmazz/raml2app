@@ -22,7 +22,7 @@ let todos = [{
 }]
 let id = 2
 
-const client = new pg.Client(config.pg)
+const pool = new pg.Pool(config.pg)
 
 // === ROUTING ===
 router.post('/todos', function * () {
@@ -99,13 +99,20 @@ const listen = ({ port }) => {
   console.log(`Koa server listening on port ${port}`)
 }
 
-client.connect((err) => {
+pool.connect((err, client, done) => {
   if (err) {
-    console.log(err)
-    return process.exit(1)
+    return console.error('error fetching client from pool', err)
   }
 
-  console.log('Connected to PG')
+  client.query('SELECT $1::int AS number', ['1'], function(err, result) {
+    done()
 
-  listen(config)
+    if (err) {
+      return console.error('error running query', err)
+    }
+
+    console.log('is 1?: ', result.rows[0].number)
+
+    listen(config)
+  })
 })

@@ -16,9 +16,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - DB_USER=$PG_USER
-      - DB_PASS=$PG_PASS
-      - DB_NAME=$PG_DBNAME
+      - DB_USER=$PGUSER
+      - DB_PASS=$PGPASSWORD
+      - DB_NAME=$PGDATABASE
     volumes:
       - dbdata:/var/lib/postgresql
 
