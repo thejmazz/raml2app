@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "app": "webpack --watch",
+    "start": "webpack --watch",
     "serve": "browser-sync start --files \"dist/*.html, dist/*.js\" --server \"dist\""
   },
   "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",

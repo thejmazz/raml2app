@@ -1,88 +1,54 @@
 'use strict'
 
+// === MODULES ===
 const koa = require('koa')
 const router = require('koa-router')()
 const cors = require('kcors')
 const bodyParser = require('koa-bodyparser')
 const morgan = require('koa-morgan')
-const pg = require('pg')
+const pgp = require('pg-promise')()
 
 // === CONFIGURATION ===
 const config = require('./lib/config.js')
 
 // === DATABASE ===
-let todos = [{
-  content: 'Buy eggs',
-  completed: false,
-  id: 0
-}, {
-  content: 'Make lunch',
-  completed: false,
-  id: 1
-}]
-let id = 2
-
-const pool = new pg.Pool(config.pg)
+const db = pgp(config.pg)
 
 // === ROUTING ===
 router.post('/todos', function * () {
-  let todo = {
-    content: this.request.body.content,
-    completed: false,
-    id: id
-  }
-
-  todos.push(todo)
-
-  id++
-
-  this.body = todo
+  const { content } = this.request.body
+  yield db.one('INSERT INTO todos(content) values($1) RETURNING id, content, completed', [content])
+    .then(todo => this.body = todo)
+    .catch(err => console.error(err))
 })
 
 router.get('/todos/all', function * () {
-  this.body = todos
+  yield db.any('SELECT * FROM todos ORDER BY id ASC')
+    .then(todos => this.body = todos)
+    .catch(err => console.error(err))
 })
 
 router.get('/todos/:id', function * () {
-  const id = parseInt(this.params.id)
-
-  todos.forEach((todo) => {
-    if (todo.id === id) this.body = todos[id]
-  })
+  const { id } = this.params
+  yield db.oneOrNone('SELECT * FROM todos WHERE id=($1)', [id])
+    .then(todo => todo ? this.body = todo : this.body = { message: `No todo with ID ${id}` })
+    .catch(err => console.error(err))
 })
 
 router.put('/todos/:id', function * () {
-  const id = parseInt(this.params.id)
+  const { id } = this.params
 
-  todos.forEach((todo) => {
-    if (todo.id === id) {
-      todo.completed = this.request.body.completed
-
-      this.body = todo
-    }
-  })
+  yield db.one('UPDATE todos SET completed = NOT completed WHERE id=($1) RETURNING id, content, completed', [id])
+    .then(todo => this.body = todo)
+    .catch(err => console.error(err))
 })
 
 router.delete('/todos/:id', function * () {
-  const deleteTodo = (id) => {
-    const newTodos = []
+  const { id } = this.params
 
-    todos.forEach((todo) => {
-      console.log(todo)
-      if (todo.id !== id) {
-        newTodos.push(todo)
-      }
-    })
-
-    return newTodos
-  }
-
-  todos = deleteTodo(parseInt(this.params.id))
-
-  this.body = {
-    success: true,
-    message: `Delete todo with id ${this.params.id}`
-  }
+  yield db.none('DELETE FROM todos WHERE id=($1)', [id])
+    .then(() => this.body = { success: true, message: `Deleted todo ${id}` })
+    .catch(err => console.error(err))
 })
 
 // === MIDDLEWARE ===
@@ -99,20 +65,4 @@ const listen = ({ port }) => {
   console.log(`Koa server listening on port ${port}`)
 }
 
-pool.connect((err, client, done) => {
-  if (err) {
-    return console.error('error fetching client from pool', err)
-  }
-
-  client.query('SELECT $1::int AS number', ['1'], function(err, result) {
-    done()
-
-    if (err) {
-      return console.error('error running query', err)
-    }
-
-    console.log('is 1?: ', result.rows[0].number)
-
-    listen(config)
-  })
-})
+listen(config)

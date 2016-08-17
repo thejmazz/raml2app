@@ -5,15 +5,17 @@ import {
   TOGGLE_TODO
 } from '../constants/todos.js'
 
+import { BASE_URL } from '../constants'
+
 import { ajax, get } from '../util'
 
 export const getTodos = () => (dispatch) => {
-  get('http://localhost:3000/todos/all')
+  get(BASE_URL + '/todos/all')
   .then(data => dispatch({ type: GET_TODOS, todos: data }))
 }
 
 export const deleteTodo = (id) => (dispatch) => {
-  ajax(`http://localhost:3000/todos/${id}`, {}, 'DELETE')
+  ajax(BASE_URL + `/todos/${id}`, {}, 'DELETE')
   .then((data) => {
     console.log(data)
 
@@ -22,7 +24,7 @@ export const deleteTodo = (id) => (dispatch) => {
 }
 
 export const addTodo = (content) => (dispatch) => {
-  ajax('http://localhost:3000/todos', { content })
+  ajax(BASE_URL + '/todos', { content })
   .then((data) => {
     console.log(data)
     dispatch({type: ADD_TODO, content: data.content })
@@ -30,7 +32,7 @@ export const addTodo = (content) => (dispatch) => {
 }
 
 export const toggleTodo = (id, completed) => (dispatch) => {
-  ajax(`http://localhost:3000/todos/${id}`, { completed: !completed }, 'PUT')
+  ajax(BASE_URL + `/todos/${id}`, undefined, 'PUT')
   .then((data) => {
     console.log(data)
 
