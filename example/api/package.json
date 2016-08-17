@@ -4,7 +4,7 @@
   "description": "Simple Todos API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "API_PORT=3000 mocha *.spec.js",
     "start": "source .env && docker-compose up api"
   },
   "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",
@@ -21,6 +21,9 @@
     "pg-promise": "^5.2.7"
   },
   "devDependencies": {
-    "nodemon": "^1.10.0"
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "nodemon": "^1.10.0",
+    "supertest": "^2.0.0"
   }
 }

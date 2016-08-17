@@ -59,6 +59,8 @@ app.use(bodyParser())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
+module.exports = require('http').createServer(app.callback())
+
 // === LISTEN ===
 const listen = ({ port }) => {
   app.listen(port)
