@@ -11,11 +11,15 @@ const env = envalid.cleanEnv(process.env, {
   PGDATABASE: str()
 })
 
+console.log('env.PGDATABASE: ', env.PGDATABASE)
+
 const config = {
   port: env.API_PORT,
   // pg uses PGUSER, PGPASSWORD, PGDATABASE
   pg: {
-    host: env.API_PG_HOST
+    host: env.API_PG_HOST,
+    user: env.PGUSER,
+    database: env.PGDATABASE
   }
 }
 

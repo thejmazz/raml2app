@@ -12,6 +12,7 @@ const pgp = require('pg-promise')()
 const config = require('./lib/config.js')
 
 // === DATABASE ===
+console.log('pg config: ', config.pg)
 const db = pgp(config.pg)
 
 // === ROUTING ===

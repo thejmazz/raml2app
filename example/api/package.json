@@ -4,7 +4,7 @@
   "description": "Simple Todos API",
   "main": "index.js",
   "scripts": {
-    "test": "API_PORT=3000 mocha *.spec.js",
+    "test": "cp test.env .env && node sql/setup-db.js && API_PORT=3000 mocha *.spec.js",
     "start": "source .env && docker-compose up api",
     "setup-db": "node sql/setup-db.js"
   },

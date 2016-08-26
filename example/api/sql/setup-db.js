@@ -23,5 +23,7 @@ queryText
   }, null))
   .then((results) => {
     console.log('results: ', results)
+
+    process.exit()
   })
   .catch(err => console.error(err))
