@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "API_PORT=3000 mocha *.spec.js",
-    "start": "source .env && docker-compose up api"
+    "start": "source .env && docker-compose up api",
+    "setup-db": "node sql/setup-db.js"
   },
   "author": "Julian Mazzitelli <mazzitelli.julian@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.3",
     "envalid": "^2.2.0",
     "js-yaml": "^3.6.1",
     "kcors": "^1.2.1",

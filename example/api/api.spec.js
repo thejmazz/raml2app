@@ -8,7 +8,8 @@ const api = require('./api.js')
 describe('api', function() {
   it('should add a new todo', function(done) {
     request(api)
-      .post('/todos', { content: 'Make lunch' })
+      .post('/todos')
+      .send({ content: 'Make lunch' })
       .expect('Content-Type', /json/)
       .expect(200, {
         content: 'Make lunch',
